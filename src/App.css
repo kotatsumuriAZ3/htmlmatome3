@@ -1,0 +1,285 @@
+
+#root {
+  max-width: 1280px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+/* ==================================== */
+/* モバイルファーストのスタイル (デフォルト) */
+/* ==================================== */
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+.tagControlsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  border-left: 15px solid rgb(200, 230, 255, 1.0);
+
+}
+.idLabel{
+  width: 40%;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+}
+.relIndex{
+  display: none;
+}
+.keepCheck {
+  font-size: 0.9em;
+  width: 50%;
+  margin-top: 0px;
+}
+.tagId {
+  font-size: 0.9em;
+  width: 50%;
+  margin-top: 0px;
+}
+/*--------------------------------------*/
+/* 　　ハンバーガーメニュー 部分開始　　　 */
+.menu-toggle {
+  display: none;
+}
+.menu-icon {
+  display: inline-block;
+  font-size: 1em;
+  cursor: pointer;
+  padding: 5px 10px;
+  background: rgba(220, 220, 220, 1.0);
+  z-index: 900;
+  position: relative;
+}
+/* サイドパネル初期状態 */
+.hamburger-menu.slide .tagControls {
+  position: fixed;
+  top: 0;
+  left: -350px; /* スライド元の位置 */
+  width: 250px;
+  height: auto;
+  background: rgba(240, 240, 240, 1.0);
+  text-align: left;
+  color: #213547;
+  overflow-y: auto;
+  transition: left 0.4s ease;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+  z-index: 1001;
+}
+
+/* チェック時にフェードイン */
+.menu-toggle:checked + .menu-icon + .tagControls {
+  left: 0;
+}
+.menu-icon::before{
+  content: ' ';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(50, 50, 50, 1.0);
+  z-index: 1000;
+  cursor: pointer;
+  opacity: 0.5;
+  display: none;
+}
+.menu-toggle:checked + .menu-icon{
+  background: rgb(135, 206, 235, 1.0);
+}
+.menu-toggle:checked + .menu-icon::before{
+  display: block;
+}
+
+.hamburger-menu{
+  width: 60%;
+  text-align: right;
+}
+.tagControlsColor, .tagControlsStyle{
+  list-style: none;
+  padding-inline-start: 0;
+}
+.colorLabel {
+  margin-left: 3px;
+}
+.tagControlsStyle li {
+  margin: 5px 0px;
+}
+.tagControlsStyle li button {
+  margin: 5px 3px;
+  padding: 5px 10px;
+}
+/* 　　ハンバーガーメニュー 部分終了　　　 */
+/*--------------------------------------*/
+
+/* ブログ専用パーツ */
+.text_frame01{
+    width: auto;
+    padding: 10px;
+    margin: 7px auto;
+    border-left: solid 5px rgba(0,0,0, 0.1);
+    box-shadow: 0px 3px 4px 0px rgba(0,0,0, 0.15);
+    background-color: rgba(245,250,248, 1);
+    word-wrap: break-word;
+    word-break: normal;
+}
+.text_frame02{
+    width: 80%;
+    padding: 12px;
+    margin: 6px auto;
+    border: solid 1px #531;
+    background-color:#eee;
+    font-size:80%;
+}
+.t_h{
+  font-size:80%;
+}
+.text_frame01 img{width:100%; height:auto;}
+.t_b img{width:100%; height:auto; max-width: 500px;}
+
+
+/* ==================================== */
+/* ＰＣ用のスタイル (幅768px以上) */
+/* ==================================== */
+@media screen and (min-width: 768px) {
+  .relIndex{
+    display: inline;
+  }
+  .resList{
+    width: 700px;
+  }
+  .text_frame01{
+  /*背景オレンジ、左にライン*/
+      width: auto;
+      padding: 15px 30px;
+      margin: 0 auto;
+      margin-bottom: 10px;
+      border-left: solid 10px rgba(0,0,0, 0.5);
+      box-shadow: 0px 3px 4px 0px rgba(0,0,0, 0.05);
+      border-radius: 0px;
+      background-color: rgba(255,239,228, 1);
+      font-size:98%;
+      line-height:1.7em;
+      display: block;
+  }
+  .text_frame02{
+  /*背景色無し、左にライン*/
+      width: 600px;
+      padding: 12px;
+      margin: 6px 30px 6px 50px;
+      border-left: solid 8px rgba(0,0,0, 0.05);
+      background-color: rgba(200,200,200, 0);
+      font-size:80%;
+  }
+
+  .t_h{font-size:80%;}
+
+  .tagControlsContainer {
+    flex: 1;
+    flex-direction: column;
+    padding: 0px;
+    font-size: 0.85em;
+  }
+  .idLabel{
+    width: 100%;
+    margin: 5px 0;
+  }
+  .keepCheck {
+    font-size: 0.9em;
+    width: 20%;
+    padding-left: 5px;
+    text-align: left;
+    flex: 1;
+    align-items: center;
+  }
+  .tagId {
+    font-size: 0.9em;
+    width: 80%;
+    text-align: left;
+    flex: 4;
+  }
+  /* ------------------------- */
+  /* 　ハンバーガメニュー部分開始 */
+  /* ハンバーガーアイコンを非表示 */
+  .menu-icon,
+  .menu-toggle {
+    display: none;
+  }
+
+  .hamburger-menu.slide .tagControls {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 5px 20px;
+    color: inherit;
+    background: rgba(240, 240, 240, 0.75);
+    box-shadow: none;
+  }
+  .hamburger-menu{
+    width: 100%;
+    padding-left: 0px;
+    font-size: 0.85em;
+  }
+  .tagControls ul{
+    margin: 0px 0;
+  }
+  .tagControlsStyle li{
+    margin-right: 8px;
+  }
+  .tagControlsColor, .tagControlsColor li, .tagControlsStyle, .tagControlsModal{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+  }
+  .tagControlsColor .tagControls-cid{
+    display: none;
+  }
+  .tagControlsColor li, .tagControlsStyle li {
+    margin: 2px 3px;
+  }
+  .tagControlsStyle li button {
+    margin: 2px 3px;
+    padding: 2px 10px;
+  }
+  /* 　ハンバーガメニュー部分終了 */
+  /* ------------------------- */
+
+}
