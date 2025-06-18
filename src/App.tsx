@@ -48,7 +48,11 @@ function App() {
   // クリーニングオプションの状態
   const [stripPostHeaderTags, setStripPostHeaderTags] = useState(true);
   const [stripPostUsernameParentheses, setStripPostUsernameParentheses] = useState(true);
+<<<<<<< HEAD
   const [saveWithAddBrTags, setSaveWithAddBrTags] = useState(false);
+=======
+  const [saveWithAddBrTags, setSaveWithAddBrTags] = useState(true);
+>>>>>>> ece416a (first commit読み込みスレッド表示の参照先を変更)
 
   const cleaningOptionsConfig = useMemo(() => [
     {
@@ -128,10 +132,22 @@ function App() {
               return;
             }
 
+<<<<<<< HEAD
             const canonicalLink = doc.querySelector('link[rel="canonical"]');
             if (canonicalLink) {
               setFileName(canonicalLink.getAttribute('href'));
             }
+=======
+            const targetLink = doc.getElementById('zxcvtypo');
+            if (targetLink) {
+              setFileName(targetLink.getAttribute('value'));
+            }
+            /*const canonicalLink = doc.querySelector('link[rel="canonical"]');
+            if (canonicalLink) {
+              setFileName(canonicalLink.getAttribute('href'));
+            }*/
+              console.log(doc);
+>>>>>>> ece416a (first commit読み込みスレッド表示の参照先を変更)
             const divsWithNumericId: ExtractedElement[] = [];
             const divElements = doc.querySelectorAll('div[id]');
 
@@ -168,7 +184,11 @@ function App() {
                   isNewTag: false,
                   children: [],
                   appliedTextColor: null,
+<<<<<<< HEAD
                   isBold: false,
+=======
+                  isBold: true,
+>>>>>>> ece416a (first commit読み込みスレッド表示の参照先を変更)
                   hasBorder: false,
                   isAA: false,
                   isText: false,
@@ -650,7 +670,11 @@ function App() {
             style={{ height: '800px', fontSize: '1.0em' }}
             totalCount={parsedElements.length}
             itemContent={renderItem}
+<<<<<<< HEAD
             increaseViewportBy={{ top: 500, bottom: 500 }}
+=======
+            increaseViewportBy={{ top: 300, bottom: 300 }}
+>>>>>>> ece416a (first commit読み込みスレッド表示の参照先を変更)
           />
         </div>
         </>
