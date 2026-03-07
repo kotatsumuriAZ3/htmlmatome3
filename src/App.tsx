@@ -140,11 +140,34 @@ function App() {
             const divsWithNumericId: ExtractedElement[] = [];
             const divElements = doc.querySelectorAll('div[id]');
 
+            // IDの出現回数をカウントするためのマップ
+            const uidTotalCounts = new Map<string, number>();
+            divElements.forEach(div => {
+              if (/^\d+$/.test(div.id)) {
+                const uidSpan = div.querySelector('.uid');
+                if (uidSpan && uidSpan.textContent) {
+                  const uid = uidSpan.textContent.trim();
+                  uidTotalCounts.set(uid, (uidTotalCounts.get(uid) || 0) + 1);
+                }
+              }
+            });
+            const uidCurrentCounts = new Map<string, number>();
+
             const currentProcessingOptions = getProcessingOptions();
 
             divElements.forEach(div => {
               const id = div.id;
               if (/^\d+$/.test(id)) {
+                // IDにカウント情報を追記 (出現順/総出現回数)
+                const uidSpan = div.querySelector('.uid');
+                if (uidSpan && uidSpan.textContent) {
+                  const uid = uidSpan.textContent.trim();
+                  const currentCount = (uidCurrentCounts.get(uid) || 0) + 1;
+                  uidCurrentCounts.set(uid, currentCount);
+                  const totalCount = uidTotalCounts.get(uid) || 0;
+                  uidSpan.textContent = `${uid} (${currentCount}/${totalCount})`;
+                }
+
                 const originalHtml = div.outerHTML;
                 const processedHtml = processHtmlString(originalHtml, currentProcessingOptions);
 
