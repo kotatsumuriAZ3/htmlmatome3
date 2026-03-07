@@ -643,7 +643,7 @@ function App() {
             >
               選択中のタグをHTMLとして保存
             </button>
-            <p style={{ fontSize: '0.9em', color: '#555', marginTop: '5px' }}>
+            <p className="note-text">
               「採用」にチェックが入ったタグのみが保存されます。
             </p>
           </div>

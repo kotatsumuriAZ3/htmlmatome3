@@ -32,14 +32,8 @@ const ElementItem: React.FC<ElementItemProps> = ({
   return (
     <div
       key={item.id + '-' + index}
-      style={{
-        borderBottom: '1px dotted #ccc',
-        padding: '0px 0px',
-        backgroundColor: item.isSelected ? '#e0f7fa' : item.isNewTag ? '#fffacd' : 'white',
-        marginLeft: item.parentId ? '15px' : '0',
-        borderLeft: item.parentId ? '0px solid #aaa' : 'none',
-        fontStyle: item.isNewTag ? 'italic' : 'normal',
-      }}
+      className={`element-item ${item.isSelected ? 'selected' : ''} ${item.isNewTag ? 'new-tag' : ''}`}
+      style={{ marginLeft: item.parentId ? '15px' : '0' }}
     >
       <div className="tagControlsContainer">
         <div className="idLabel">
@@ -55,8 +49,8 @@ const ElementItem: React.FC<ElementItemProps> = ({
           </div>
           <div className="tagId" style={{ }}>
             <strong>ID:</strong> {item.id} <span className="relIndex">(Index: {index})
-            {item.isNewTag && <span style={{ color: 'orange', marginLeft: '5px' }}>[新規]</span>}
-            {item.isManuallyMoved && <span style={{ color: 'purple', marginLeft: '5px' }}>[手動移動]</span>}
+            {item.isNewTag && <span className="status-label status-new">[新規]</span>}
+            {item.isManuallyMoved && <span className="status-label status-moved">[手動移動]</span>}
             {item.parentId && <span> - 親ID: {item.parentId}</span>}
             {item.referencedId && !item.isManuallyMoved && <span> - 参照ID: {item.referencedId}</span>}</span>
           </div>
@@ -148,7 +142,7 @@ const ElementItem: React.FC<ElementItemProps> = ({
               <li>
                 <button
                   onClick={() => onOpenMoveModal(item.id)}
-                  style={{ backgroundColor: '#e6e6fa', border: '1px solid #ccc', cursor: 'pointer' }}
+                  className="btn-action btn-move"
                 >
                   移動
                 </button>
@@ -156,7 +150,7 @@ const ElementItem: React.FC<ElementItemProps> = ({
               <li>
                 <button
                   onClick={() => onOpenAddTagModal(item.id)}
-                  style={{ backgroundColor: '#d4edda', border: '1px solid #ccc', cursor: 'pointer' }}
+                  className="btn-action btn-insert"
                 >
                   挿入
                 </button>
@@ -164,7 +158,7 @@ const ElementItem: React.FC<ElementItemProps> = ({
               <li>
                 <button
                   onClick={() => onOpenDeleteModal(item.id)}
-                  style={{ backgroundColor: '#d4edda', border: '1px solid #ccc', cursor: 'pointer' }}
+                  className="btn-action btn-delete"
                 >
                   削除
                 </button>
@@ -173,7 +167,7 @@ const ElementItem: React.FC<ElementItemProps> = ({
           </nav>
         </div>
       </div>
-      <div style={{ fontSize: '0.9em', color: '#111', border: '0px solid #eee', padding: '5px 25px', textAlign: 'left' }}>
+      <div className="element-item-content">
         <div dangerouslySetInnerHTML={{ __html: item.processedHtml }} />
       </div>
     </div>

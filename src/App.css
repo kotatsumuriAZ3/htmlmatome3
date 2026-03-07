@@ -249,7 +249,7 @@
     height: auto;
     padding: 5px 20px;
     color: inherit;
-    background: rgba(240, 240, 240, 0.75);
+    background: rgba(30, 30, 30, 0.5);
     box-shadow: none;
   }
   .hamburger-menu{
@@ -281,5 +281,21 @@
   }
   /* 　ハンバーガメニュー部分終了 */
   /* ------------------------- */
+
+}
+
+
+
+@media (prefers-color-scheme: light) {
+
+  .hamburger-menu.slide .tagControls {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 5px 20px;
+    color: inherit;
+    background: rgba(240, 240, 240, 0.75);
+    box-shadow: none;
+  }
 
 }
