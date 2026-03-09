@@ -593,7 +593,7 @@ function App() {
     }
   }, [scrollToIndexInput, parsedElements.length]);
 
-  // IDの除外指定チェックボックス
+  // IDの除外指定チェックボックスの操作
   const handleToggleUid = (uid: string) => {
     setSelectedUids(prev => {
       const next = new Set(prev);
@@ -606,6 +606,24 @@ function App() {
       return next;
     });
   };
+
+  //　除外指定したIDを持つレスの採用を取り消す
+  useEffect(() => {
+    setExtractedElements(prev =>
+      prev.map(el => {
+        const uid = (el as ExtractedElement).uid;
+
+        if (uid && selectedUids.has(uid) && el.isSelected) {
+          return {
+            ...el,
+            isSelected: false
+          };
+        }
+
+        return el;
+      })
+    );
+  }, [selectedUids]);
 
   // renderItem を ElementItem コンポーネントに置き換え
   const renderItem = useCallback((index: number) => {
@@ -700,7 +718,7 @@ function App() {
           <p>（スクロールして内容を確認・操作してください）</p>
           <Virtuoso
             ref={virtuosoRef}
-            style={{ height: '800px', fontSize: '1.0em' }}
+            style={{ height: '90vh', fontSize: '1.0em' }}
             totalCount={parsedElements.length}
             itemContent={renderItem}
             increaseViewportBy={{ top: 300, bottom: 300 }}

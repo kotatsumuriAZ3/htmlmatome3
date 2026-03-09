@@ -33,6 +33,9 @@ const ElementItem: React.FC<ElementItemProps> = ({
   selectedUids,
   onToggleUid
 }) => {
+  const uid = (item as ExtractedElement).uid;
+  const isNgUid = uid && selectedUids.has(uid);
+
   return (
     <div
       key={item.id + '-' + index}
@@ -61,23 +64,22 @@ const ElementItem: React.FC<ElementItemProps> = ({
           {/* UID情報の表示 */}
           {(item as any).uid && (
             <div className="uidLabel" style={{ marginLeft: '10px' }}>
-              <label>
+               {(item as ExtractedElement).uid}
+              <span className="uidCount">
+                {(item as ExtractedElement).uidCount}
+              </span>
+              <span style={{ textAlign: 'right' }}><label>
                 <input
                   type="checkbox"
                   checked={selectedUids.has((item as ExtractedElement).uid!)}
                   onChange={() => onToggleUid((item as ExtractedElement).uid!)}
                 />
               </label>
-
-              <strong>UID:</strong> {(item as ExtractedElement).uid}
-
-              <span className="uidCount">
-                {(item as ExtractedElement).uidCount}
-              </span>
+              NG判定</span>
             </div>
           )}
         </div>
-        <div className="hamburger-menu slide" id={`tagControls-${item.id}`}>
+        <div className="hamburger-menu slide" id={`tagControls-${item.id}`} style={{ display: isNgUid ? 'none' : undefined }}>
           <input type="checkbox" id={`menu-toggle-slide-${item.id}`} className="menu-toggle"/>
           <label htmlFor={`menu-toggle-slide-${item.id}`} className="menu-icon">&#9776;</label>
           <nav className="tagControls">
@@ -189,7 +191,10 @@ const ElementItem: React.FC<ElementItemProps> = ({
           </nav>
         </div>
       </div>
-      <div className="element-item-content">
+      <div
+        className="element-item-content"
+        style={{ display: isNgUid ? 'none' : undefined }}
+      >
         <div dangerouslySetInnerHTML={{ __html: item.processedHtml }} />
       </div>
     </div>
