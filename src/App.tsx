@@ -159,13 +159,18 @@ function App() {
               const id = div.id;
               if (/^\d+$/.test(id)) {
                 // IDにカウント情報を追記 (出現順/総出現回数)
+                let uid: string | null = null;
+                let uidCount: string | null = null;
+
                 const uidSpan = div.querySelector('.uid');
                 if (uidSpan && uidSpan.textContent) {
-                  const uid = uidSpan.textContent.trim();
-                  const currentCount = (uidCurrentCounts.get(uid) || 0) + 1;
-                  uidCurrentCounts.set(uid, currentCount);
-                  const totalCount = uidTotalCounts.get(uid) || 0;
-                  uidSpan.textContent = `${uid} (${currentCount}/${totalCount})`;
+                  const uidText = uidSpan.textContent.trim();
+                  const currentCount = (uidCurrentCounts.get(uidText) || 0) + 1;
+                  uidCurrentCounts.set(uidText, currentCount);
+                  const totalCount = uidTotalCounts.get(uidText) || 0;
+                  // uidSpan.textContent = `${uidText} (${currentCount}/${totalCount})`; // ElementItemへ移動するため削除
+                  uid = uidText;
+                  uidCount = `(${currentCount}/${totalCount})`;
                 }
 
                 const originalHtml = div.outerHTML;
@@ -201,7 +206,9 @@ function App() {
                   isAA: false,
                   isText: false,
                   hasBr: false,
-                });
+                  uid: uid,
+                  uidCount: uidCount
+                } as ExtractedElement);
               }
             });
             setExtractedElements(divsWithNumericId);
@@ -463,7 +470,8 @@ function App() {
       isAA: false,
       isText: false,
       hasBr: false,
-    };
+      // uid, uidCount は新規タグには無いか、必要なら追加
+    } as any;
 
     setExtractedElements(prevElements => {
       return [...prevElements, newElement];

@@ -11,6 +11,8 @@ interface ElementItemProps {
   onOpenMoveModal: (elementId: string) => void;
   onOpenAddTagModal: (parentId: string) => void;
   onOpenDeleteModal: (parentId: string) => void;
+  onToggleNgUid: (uid: string) => void;
+  isNgUid: boolean;
 }
 
 // タグコントロールコンテナ　更新場所
@@ -28,6 +30,8 @@ const ElementItem: React.FC<ElementItemProps> = ({
   onOpenMoveModal,
   onOpenAddTagModal,
   onOpenDeleteModal,
+  onToggleNgUid,
+  isNgUid,
 }) => {
   return (
     <div
@@ -54,6 +58,16 @@ const ElementItem: React.FC<ElementItemProps> = ({
             {item.parentId && <span> - 親ID: {item.parentId}</span>}
             {item.referencedId && !item.isManuallyMoved && <span> - 参照ID: {item.referencedId}</span>}</span>
           </div>
+          {/* UID情報の表示 */}
+          {item.uid && (
+            <div className="uidLabel" style={{ marginLeft: '10px' }}>
+              <label>
+                <input type="checkbox" checked={isNgUid} onChange={() => onToggleNgUid(item.uid!)} />
+                NG UID
+              </label>
+              <strong style={{ marginLeft: '5px' }}>UID:</strong> {item.uid} <span className="uidCount">{item.uidCount}</span>
+            </div>
+          )}
         </div>
         <div className="hamburger-menu slide" id={`tagControls-${item.id}`}>
           <input type="checkbox" id={`menu-toggle-slide-${item.id}`} className="menu-toggle"/>
@@ -167,7 +181,10 @@ const ElementItem: React.FC<ElementItemProps> = ({
           </nav>
         </div>
       </div>
-      <div className="element-item-content">
+      <div
+        className="element-item-content"
+        style={{ display: isNgUid ? 'none' : 'block' }}
+      >
         <div dangerouslySetInnerHTML={{ __html: item.processedHtml }} />
       </div>
     </div>

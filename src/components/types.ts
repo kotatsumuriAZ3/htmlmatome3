@@ -1,5 +1,3 @@
-// src/types/index.ts
-
 export interface ExtractedElement {
   id: string;
   originalHtml: string;
@@ -20,7 +18,15 @@ export interface ExtractedElement {
   uidCount: string | null;
 }
 
+export interface ElementUpdatePayload {
+  id: string;
+  updates: Partial<ExtractedElement>;
+}
+
 export interface ProcessOptions {
+  stripPostHeaderTags?: boolean;
+  stripPostUsernameParentheses?: boolean;
+  saveWithAddBrTags?: boolean;
   textColor?: string | null;
   isBold?: boolean;
   hasBorder?: boolean;
@@ -28,12 +34,4 @@ export interface ProcessOptions {
   isText?: boolean;
   parentId?: string | null;
   hasBr?: boolean;
-  stripPostHeaderTags?: boolean;
-  stripPostUsernameParentheses?: boolean;
-  saveWithAddBrTags?: boolean;
-}
-
-export interface ElementUpdatePayload {
-  id: string;
-  updates: Partial<ExtractedElement>;
 }
