@@ -1,6 +1,6 @@
 // src/utils/htmlProcessor.ts
 
-import type { ProcessOptions } from '../types';
+import type { ProcessOptions } from '../types/types.ts';
 
 export const processHtmlString = (htmlString: string, options: ProcessOptions = {}): string => {
   const parser = new DOMParser();
