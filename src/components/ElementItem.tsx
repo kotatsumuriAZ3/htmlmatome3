@@ -1,7 +1,7 @@
 // src/components/ElementItem.tsx
 
 import React from 'react';
-import type { ElementUpdatePayload, ExtractedElement } from '../types';
+import type { ElementUpdatePayload, ExtractedElement } from '../types/types.ts';
 import { TEXT_COLORS } from '../constants/colors';
 
 interface ElementItemProps {
@@ -11,8 +11,8 @@ interface ElementItemProps {
   onOpenMoveModal: (elementId: string) => void;
   onOpenAddTagModal: (parentId: string) => void;
   onOpenDeleteModal: (parentId: string) => void;
-  onToggleNgUid: (uid: string) => void;
-  isNgUid: boolean;
+  selectedUids: Set<string>;
+  onToggleUid: (uid: string) => void;
 }
 
 // タグコントロールコンテナ　更新場所
@@ -30,8 +30,8 @@ const ElementItem: React.FC<ElementItemProps> = ({
   onOpenMoveModal,
   onOpenAddTagModal,
   onOpenDeleteModal,
-  onToggleNgUid,
-  isNgUid,
+  selectedUids,
+  onToggleUid
 }) => {
   return (
     <div
@@ -59,13 +59,21 @@ const ElementItem: React.FC<ElementItemProps> = ({
             {item.referencedId && !item.isManuallyMoved && <span> - 参照ID: {item.referencedId}</span>}</span>
           </div>
           {/* UID情報の表示 */}
-          {item.uid && (
+          {(item as any).uid && (
             <div className="uidLabel" style={{ marginLeft: '10px' }}>
               <label>
-                <input type="checkbox" checked={isNgUid} onChange={() => onToggleNgUid(item.uid!)} />
-                NG UID
+                <input
+                  type="checkbox"
+                  checked={selectedUids.has((item as ExtractedElement).uid!)}
+                  onChange={() => onToggleUid((item as ExtractedElement).uid!)}
+                />
               </label>
-              <strong style={{ marginLeft: '5px' }}>UID:</strong> {item.uid} <span className="uidCount">{item.uidCount}</span>
+
+              <strong>UID:</strong> {(item as ExtractedElement).uid}
+
+              <span className="uidCount">
+                {(item as ExtractedElement).uidCount}
+              </span>
             </div>
           )}
         </div>
@@ -181,10 +189,7 @@ const ElementItem: React.FC<ElementItemProps> = ({
           </nav>
         </div>
       </div>
-      <div
-        className="element-item-content"
-        style={{ display: isNgUid ? 'none' : 'block' }}
-      >
+      <div className="element-item-content">
         <div dangerouslySetInnerHTML={{ __html: item.processedHtml }} />
       </div>
     </div>

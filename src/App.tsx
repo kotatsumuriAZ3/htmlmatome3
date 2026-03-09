@@ -10,7 +10,7 @@ import './App.css';
 // ----------------------
 // インポートの追加
 // ----------------------
-import type { ExtractedElement, ElementUpdatePayload, ProcessOptions } from './types';
+import type { ExtractedElement, ElementUpdatePayload, ProcessOptions } from './types/types.ts';
 import { processHtmlString } from './utils/htmlProcessor';
 import Modal from './components/Modal';
 import ElementItem from './components/ElementItem';
@@ -31,6 +31,7 @@ function App() {
   const [newTagContentInput, setNewTagContentInput] = useState('');
   const [addTagAsRoot, setAddTagAsRoot] = useState(false);
   const [moveAsRoot, setMoveAsRoot] = useState(false);
+  const [selectedUids, setSelectedUids] = useState<Set<string>>(new Set());
   // 削除機能
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [deleteTargetElementId, setDeleteTargetElementId] = useState<string | null>(null);
@@ -470,8 +471,9 @@ function App() {
       isAA: false,
       isText: false,
       hasBr: false,
-      // uid, uidCount は新規タグには無いか、必要なら追加
-    } as any;
+      uid: null,
+      uidCount: null,
+    } as ExtractedElement;
 
     setExtractedElements(prevElements => {
       return [...prevElements, newElement];
@@ -591,6 +593,19 @@ function App() {
     }
   }, [scrollToIndexInput, parsedElements.length]);
 
+  // IDの除外指定チェックボックス
+  const handleToggleUid = (uid: string) => {
+    setSelectedUids(prev => {
+      const next = new Set(prev);
+      if (next.has(uid)) {
+        next.delete(uid);
+      } else {
+        next.add(uid);
+      }
+      console.log("handleToggleUid",next);
+      return next;
+    });
+  };
 
   // renderItem を ElementItem コンポーネントに置き換え
   const renderItem = useCallback((index: number) => {
@@ -605,9 +620,11 @@ function App() {
         onOpenMoveModal={openMoveModal}
         onOpenAddTagModal={openAddTagModal}
         onOpenDeleteModal={openDeleteModal}
+        selectedUids={selectedUids}
+        onToggleUid={handleToggleUid}
       />
     );
-  }, [parsedElements, handleUpdateElement, openMoveModal, openAddTagModal, openDeleteModal]);
+  }, [parsedElements, handleUpdateElement, openMoveModal, openAddTagModal, openDeleteModal, handleToggleUid, selectedUids]);
 
   return (
     <div className="App">
